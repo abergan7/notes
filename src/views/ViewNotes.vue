@@ -23,14 +23,14 @@
           </button>
         </div>
       </div>
-      <NoteCard v-for="note in notes" :key="note.id" :note="note" />
+      <NoteCard v-for="note in notes" :key="note.id" :note="note" @deleteClicked="deleteNote" />
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import NoteCard from '@/components/Notes/Note.vue'
+import NoteCard from '@/components/Notes/NoteCard.vue'
 
 const newNote = ref('')
 const newNoteRef = ref(null)
@@ -46,6 +46,7 @@ const notes = ref([
   }
 ])
 
+// add note
 const addNote = () => {
   let id = new Date().getTime().toString()
   let note = {
@@ -56,5 +57,12 @@ const addNote = () => {
   notes.value.unshift(note)
   newNote.value = ''
   newNoteRef.value.focus()
+}
+
+// delete note
+const deleteNote = (id) => {
+  notes.value = notes.value.filter((note) => {
+    return note.id !== id
+  })
 }
 </script>
