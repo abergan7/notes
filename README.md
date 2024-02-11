@@ -1,6 +1,6 @@
-# notes
+# Notes
 
-This template should help get you started developing with Vue 3 in Vite.
+You can test this simple static app here: [https://notesvuejs3.netlify.app/](https://notesvuejs3.netlify.app/#/)
 
 ## Recommended IDE Setup
 
