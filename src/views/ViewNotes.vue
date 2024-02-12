@@ -1,6 +1,6 @@
 <template>
   <div class="notes">
-    <div class="card has-background-success-dark p-4 mb-5">
+    <!-- <div class="card has-background-success-dark p-4 mb-5">
       <div class="field">
         <div class="control">
           <textarea
@@ -22,47 +22,47 @@
             Add New Note
           </button>
         </div>
-      </div>
-      <NoteCard v-for="note in notes" :key="note.id" :note="note" @deleteClicked="deleteNote" />
-    </div>
+      </div> -->
+    <AddEditNote v-model="newNote" ref="addEditNoteRef">
+      <template #buttons>
+        <button class="button is-link has-background-success" :disabled="!newNote" @click="addNote">
+          Add New Note
+        </button>
+      </template>
+    </AddEditNote>
+    <!-- <NoteCard
+        v-for="note in storeNotes.notes"
+        :key="note.id"
+        :note="note"
+        @deleteClicked="deleteNote"
+      /> -->
   </div>
+  <NoteCard v-for="note in storeNotes.notes" :key="note.id" :note="note" />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import NoteCard from '@/components/Notes/NoteCard.vue'
+import AddEditNote from '@/components/Notes/AddEditNote.vue'
+
+import { useStoreNotes } from '@/stores/storeNotes'
+
+// store
+const storeNotes = useStoreNotes()
 
 const newNote = ref('')
-const newNoteRef = ref(null)
-const notes = ref([
-  {
-    id: 'id1',
-    content:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quidem ipsa commodi sint utullam culpa nulla molestia'
-  },
-  {
-    id: 'id2',
-    content: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. 2'
-  }
-])
+const addEditNoteRef = ref(null)
 
 // add note
 const addNote = () => {
-  let id = new Date().getTime().toString()
-  let note = {
-    id,
-    content: newNote.value
-  }
+  storeNotes.addNote(newNote.value)
 
-  notes.value.unshift(note)
   newNote.value = ''
-  newNoteRef.value.focus()
+  addEditNoteRef.value.focusTextarea()
 }
 
-// delete note
-const deleteNote = (id) => {
-  notes.value = notes.value.filter((note) => {
-    return note.id !== id
-  })
-}
+// // delete note
+// const deleteNote = (id) => {
+//   storeNotes.deleteNote(id)
+// }
 </script>
