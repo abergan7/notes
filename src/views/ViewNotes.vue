@@ -23,7 +23,7 @@
           </button>
         </div>
       </div> -->
-    <AddEditNote v-model="newNote" ref="addEditNoteRef">
+    <AddEditNote v-model="newNote" placeholder="Add a new note" ref="addEditNoteRef">
       <template #buttons>
         <button class="button is-link has-background-success" :disabled="!newNote" @click="addNote">
           Add New Note
@@ -44,6 +44,7 @@
 import { ref } from 'vue'
 import NoteCard from '@/components/Notes/NoteCard.vue'
 import AddEditNote from '@/components/Notes/AddEditNote.vue'
+import { useWatchCharacters } from '@/use/useWatchCharacters'
 
 import { useStoreNotes } from '@/stores/storeNotes'
 
@@ -60,6 +61,9 @@ const addNote = () => {
   newNote.value = ''
   addEditNoteRef.value.focusTextarea()
 }
+
+// watch characters
+useWatchCharacters(newNote)
 
 // // delete note
 // const deleteNote = (id) => {

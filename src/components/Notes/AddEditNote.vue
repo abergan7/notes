@@ -1,12 +1,15 @@
 <template>
-  <div class="card has-background-success-dark p-4 mb-5">
+  <div class="card p-4 mb-5" :class="`has-background-${bgColor}-dark`">
+    <label v-if="props.label" class="label has-text-white">{{ props.label }}</label>
     <div class="field">
       <div class="control">
         <textarea
+          v-autofocus
           :value="props.modelValue"
           @input="$emit('update:modelValue', $event.target.value)"
           class="textarea"
-          placeholder="Add a new note"
+          maxlength="100"
+          :placeholder="props.placeholder"
           ref="textareaRef"
         />
       </div>
@@ -33,6 +36,17 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true
+  },
+  bgColor: {
+    type: String,
+    default: 'success'
+  },
+  placeholder: {
+    type: String,
+    default: 'Type something'
+  },
+  label: {
+    type: String
   }
 })
 
@@ -46,4 +60,11 @@ const focusTextarea = () => {
 defineExpose({
   focusTextarea
 })
+
+// directives
+const vAutoFocus = {
+  mounted: (element) => {
+    element.focus()
+  }
+}
 </script>
