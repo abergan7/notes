@@ -44,6 +44,7 @@
 import { ref } from 'vue'
 import NoteCard from '@/components/Notes/NoteCard.vue'
 import AddEditNote from '@/components/Notes/AddEditNote.vue'
+
 import { useWatchCharacters } from '@/use/useWatchCharacters'
 
 import { useStoreNotes } from '@/stores/storeNotes'
